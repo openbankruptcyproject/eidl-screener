@@ -4,33 +4,197 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>EIDL Discharge Eligibility Screener — Open Bankruptcy Project</title>
-<meta name="description" content="Educational self-screening tool for evaluating whether an EIDL loan is likely dischargeable in bankruptcy. Walks personal-guarantee status, fraud carve-out">
+<meta name="description" content="Educational self-assessment tool for evaluating EIDL discharge in bankruptcy. Walks personal-guarantee, fraud carve-outs, and chapter-specific factors.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://eidl-screener.openbankruptcyproject.org/">
-<!-- GA4 -->
+<meta property="og:title" content="EIDL Discharge Eligibility Screener — Open Bankruptcy Project">
+<meta property="og:description" content="Educational self-assessment tool for evaluating EIDL discharge in bankruptcy. Walks personal-guarantee, fraud carve-outs, and chapter-specific factors.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://eidl-screener.openbankruptcyproject.org/">
+<meta name="twitter:card" content="summary_large_image">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-FTWLM223G7"></script>
-<script>
-window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-gtag('js',new Date());gtag('config','G-FTWLM223G7');
-</script>
-<style>
-body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-max-width:760px;margin:0 auto;padding:2rem 1rem;line-height:1.6;color:#1a1a1a;background:#fafafa}
-h1{font-size:1.9rem;line-height:1.2;margin:0 0 1rem}
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','G-FTWLM223G7');</script>
+<style>body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+max-width:820px;margin:0 auto;padding:2rem 1rem;line-height:1.65;color:#1a1a1a;background:#fafafa}
+h1{font-size:2rem;line-height:1.2;margin:0 0 0.5rem}
+h2{font-size:1.4rem;margin:2rem 0 0.75rem;color:#0c5cb6}
+h3{font-size:1.1rem;margin:1.5rem 0 0.5rem}
 .lead{font-size:1.1rem;color:#444;margin:0 0 2rem}
+.tag{display:inline-block;padding:0.15rem 0.6rem;background:#0c5cb6;color:#fff;font-size:0.75rem;border-radius:3px;margin-bottom:1rem}
+.callout{padding:1rem 1.25rem;background:#fff8e0;border-left:4px solid #d4a900;border-radius:0 4px 4px 0;margin:1.5rem 0}
+.callout h3{margin-top:0;color:#a07700}
+.related{padding:1rem 1.25rem;background:#f4f8fc;border-left:4px solid #0c5cb6;border-radius:0 4px 4px 0;margin:1.5rem 0}
+table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:0.95rem}
+th,td{padding:0.5rem 0.75rem;border:1px solid #ddd;text-align:left}
+th{background:#f0f4f8}
+ul{padding-left:1.25rem}
 footer{margin-top:3rem;padding-top:1.5rem;border-top:1px solid #ddd;color:#666;font-size:0.9rem}
 a{color:#0c5cb6}
-.tag{display:inline-block;padding:0.15rem 0.6rem;background:#0c5cb6;color:#fff;font-size:0.75rem;border-radius:3px;margin-bottom:1rem}
-</style>
+nav.breadcrumb{font-size:0.9rem;margin-bottom:1rem;color:#666}
+nav.breadcrumb a{color:#0c5cb6}</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"EIDL Discharge Eligibility Screener — Open Bankruptcy Project","description":"Educational self-assessment tool for evaluating EIDL discharge in bankruptcy. Walks personal-guarantee, fraud carve-outs, and chapter-specific factors.","url":"https://eidl-screener.openbankruptcyproject.org/"}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"Open Bankruptcy Project","url":"https://openbankruptcyproject.org/","taxID":"41-5159631"}
+</script>
 </head>
 <body>
 <span class="tag">Open Bankruptcy Project</span>
 <h1>EIDL Discharge Eligibility Screener</h1>
-<p class="lead">Educational self-screening tool for evaluating whether an EIDL loan is likely dischargeable in bankruptcy. Walks personal-guarantee status, fraud carve-outs, and chapter-specific considerations. Not legal advice.</p>
-<p><strong>Status:</strong> Empirical research and educational content under construction.</p>
+<p class="lead">Educational self-assessment tool. Walk through your EIDL
+situation and get a non-binding educational summary of likely discharge
+outcome and key factors. Not legal advice; runs in your browser; no data
+collected.</p>
+
+<form id="screener" onsubmit="event.preventDefault();assess();">
+
+<fieldset>
+<legend><strong>1. Loan amount and structure</strong></legend>
+<label><input type="radio" name="amount" value="under_25k" required> Under $25,000</label><br>
+<label><input type="radio" name="amount" value="25k_to_200k"> $25,000 to $199,999</label><br>
+<label><input type="radio" name="amount" value="200k_or_more"> $200,000 or more</label><br>
+<label><input type="radio" name="amount" value="dont_know"> Not sure</label>
+</fieldset>
+
+<fieldset>
+<legend><strong>2. Personal guarantee</strong></legend>
+<label><input type="radio" name="pg" value="yes" required> Yes, I signed a personal guarantee</label><br>
+<label><input type="radio" name="pg" value="no"> No, no personal guarantee was required</label><br>
+<label><input type="radio" name="pg" value="dont_know"> Not sure &mdash; check Form 148 / 148L</label>
+</fieldset>
+
+<fieldset>
+<legend><strong>3. Borrower entity</strong></legend>
+<label><input type="radio" name="entity" value="sole_prop" required> Sole proprietorship / individual</label><br>
+<label><input type="radio" name="entity" value="llc"> LLC</label><br>
+<label><input type="radio" name="entity" value="corp"> Corporation (S or C)</label><br>
+<label><input type="radio" name="entity" value="partnership"> Partnership</label>
+</fieldset>
+
+<fieldset>
+<legend><strong>4. SBA OIG / DOJ contact</strong></legend>
+<label><input type="radio" name="oig" value="none" required> No contact from OIG, DOJ, or US Attorney's Office</label><br>
+<label><input type="radio" name="oig" value="cid"> Received subpoena, CID, or interview request from SBA OIG</label><br>
+<label><input type="radio" name="oig" value="dojcivil"> Civil contact from DOJ or US Attorney's Office</label><br>
+<label><input type="radio" name="oig" value="dojcrim"> Criminal contact &mdash; target letter, indictment, search warrant</label>
+</fieldset>
+
+<fieldset>
+<legend><strong>5. Loan use</strong></legend>
+<label><input type="radio" name="use" value="permitted" required> Used solely for SBA-permitted business purposes (working capital, payroll, rent, fixed costs)</label><br>
+<label><input type="radio" name="use" value="mixed"> Mixed use &mdash; mostly business, some personal or speculative</label><br>
+<label><input type="radio" name="use" value="prohibited"> Used for prohibited purposes (real estate purchase, refinancing personal debt, paying owners' personal expenses)</label>
+</fieldset>
+
+<fieldset>
+<legend><strong>6. Application accuracy</strong></legend>
+<label><input type="radio" name="application" value="accurate" required> Application was accurate &mdash; revenue, employees, business existence all matched reality</label><br>
+<label><input type="radio" name="application" value="some_errors"> Some inaccuracies / overstatements but not deliberate fraud</label><br>
+<label><input type="radio" name="application" value="material"> Material misrepresentations (revenue, employee count, or business existence)</label>
+</fieldset>
+
+<fieldset>
+<legend><strong>7. Bankruptcy chapter under consideration</strong></legend>
+<label><input type="radio" name="chapter" value="ch7" required> Chapter 7 (individual)</label><br>
+<label><input type="radio" name="chapter" value="ch13"> Chapter 13 (individual)</label><br>
+<label><input type="radio" name="chapter" value="ch11_subv"> Chapter 11 / Subchapter V (business reorganization)</label><br>
+<label><input type="radio" name="chapter" value="ch11"> Chapter 11 (large business)</label><br>
+<label><input type="radio" name="chapter" value="business_only"> Business-only Chapter 7 (entity liquidation)</label>
+</fieldset>
+
+<button type="submit" style="margin:1rem 0;padding:0.75rem 1.5rem;background:#0c5cb6;color:#fff;border:0;border-radius:4px;font-size:1rem;cursor:pointer">Assess</button>
+</form>
+
+<div id="results" style="display:none;margin:2rem 0;padding:1.5rem;background:#fff;border:1px solid #ddd;border-radius:6px"></div>
+
+<script>
+function val(name){
+  const el = document.querySelector(`input[name="${name}"]:checked`);
+  return el ? el.value : null;
+}
+function assess(){
+  const a = {
+    amount: val('amount'), pg: val('pg'), entity: val('entity'),
+    oig: val('oig'), use: val('use'), application: val('application'),
+    chapter: val('chapter')
+  };
+  const findings = [];
+  let summary = '';
+
+  // Core: do you even have personal liability?
+  if (a.pg === 'no' && a.entity !== 'sole_prop') {
+    summary = 'Likely <strong>no individual liability</strong> on this EIDL.';
+    findings.push('Without a personal guarantee, the EIDL is the entity\'s debt only. Your individual bankruptcy generally has no effect on it. Consider whether entity dissolution (winding down the LLC/corporation) is sufficient before filing personal bankruptcy.');
+    if (a.amount === '200k_or_more') {
+      findings.push('Note: SBA generally required PG on $200K+ EIDL. Double-check Form 148 / 148L. If you signed one, redo this screener with PG=Yes.');
+    }
+  } else if (a.entity === 'sole_prop') {
+    findings.push('As a sole proprietor, the loan is automatically your individual debt &mdash; no PG distinction. Your bankruptcy directly affects it.');
+    summary = 'EIDL is <strong>your individual debt</strong>. Discharge analysis below.';
+  } else {
+    findings.push('Your personal guarantee makes the loan your individual debt as well as the entity\'s. Your bankruptcy can discharge your personal liability.');
+    summary = 'EIDL is <strong>your individual debt via PG</strong>. Discharge analysis below.';
+  }
+
+  // Fraud risk
+  let fraudRisk = 'low';
+  if (a.application === 'material' || a.use === 'prohibited' || a.oig === 'dojcrim') fraudRisk = 'high';
+  else if (a.oig === 'cid' || a.oig === 'dojcivil' || a.use === 'mixed' || a.application === 'some_errors') fraudRisk = 'elevated';
+
+  if (fraudRisk === 'high') {
+    findings.push('<strong>High fraud-AP risk.</strong> The SBA or DOJ is likely to file an adversary proceeding under § 523(a)(2)(A) or (a)(6) seeking to except the EIDL from discharge. Your bankruptcy strategy must coordinate with white-collar criminal defense counsel.');
+  } else if (fraudRisk === 'elevated') {
+    findings.push('<strong>Elevated fraud-AP risk.</strong> SBA OIG investigation in progress or pattern suggests scrutiny. Track the 60-day post-§-341-meeting AP deadline carefully.');
+  } else {
+    findings.push('Low fraud-AP risk based on these answers. Routine discharge most likely.');
+  }
+
+  // Chapter-specific
+  if (a.chapter === 'ch7') {
+    findings.push('<strong>Chapter 7:</strong> EIDL is general unsecured. Discharged at the discharge order unless an AP succeeds. SBA has 60 days from your § 341 meeting to file any discharge objection.');
+  } else if (a.chapter === 'ch13') {
+    findings.push('<strong>Chapter 13:</strong> EIDL gets pro-rata distribution under your plan. Discharge at plan completion (3-5 years). SBA can file an AP under § 1328(a)(2) for fraud-related debts.');
+  } else if (a.chapter === 'ch11_subv') {
+    findings.push('<strong>Subchapter V:</strong> EIDL paid under plan; remaining balance discharged at plan completion (individual debtor) or confirmation (entity). Confirm Sub V eligibility &mdash; the post-CARES debt limit is approximately $3.024 million in noncontingent liquidated debt.');
+  } else if (a.chapter === 'ch11') {
+    findings.push('<strong>Standard Chapter 11:</strong> EIDL paid per confirmed plan; the absolute priority rule applies. Significantly more expensive than Sub V; reserve for cases above the Sub V debt ceiling.');
+  } else if (a.chapter === 'business_only') {
+    findings.push('<strong>Business-only Chapter 7:</strong> Entities receive no discharge (§ 727(a)(1)). The case liquidates assets and the entity ceases to exist; remaining EIDL becomes uncollectable as a practical matter, but if you signed a PG the SBA can still pursue you personally.');
+  }
+
+  // Render
+  let html = `<h2 style="margin-top:0">Educational Summary</h2><p style="font-size:1.1rem">${summary}</p><h3>Key factors</h3><ul>`;
+  for (const f of findings) html += `<li>${f}</li>`;
+  html += '</ul>';
+  html += '<h3>Next steps (educational, not legal advice)</h3><ol>';
+  html += '<li>Pull your full SBA loan file (Form 148/148L for PG status, Form 2202 for collateral, application forms for accuracy review). FOIA request to SBA Office of Disaster Assistance if you don\'t have it.</li>';
+  if (fraudRisk !== 'low') html += '<li><strong>Get white-collar criminal defense counsel involved before filing.</strong> Bankruptcy strategy depends on coordination with the criminal track.</li>';
+  html += '<li>Consult a licensed bankruptcy attorney in your jurisdiction. Free consultations and pro-bono clinics exist; this screener is not a substitute.</li>';
+  html += '<li>Document your loan use carefully &mdash; bank statements showing business expenditures, payroll records, rent receipts. These are your defense if a discharge AP is filed.</li>';
+  html += '</ol>';
+  html += '<p style="margin-top:2rem;padding:1rem;background:#fff8e0;border-left:4px solid #d4a900;font-size:0.9rem">This is an <strong>educational tool</strong>. It does not establish an attorney-client relationship. Outcomes depend on facts not captured here, on your specific jurisdiction\'s case law, and on the SBA\'s litigation posture in your case. Consult a licensed bankruptcy attorney before filing.</p>';
+
+  const out = document.getElementById('results');
+  out.innerHTML = html;
+  out.style.display = 'block';
+  out.scrollIntoView({behavior:'smooth'});
+}
+</script>
+<div class="related">
+<strong>Related:</strong>
+<a href="https://eidl.openbankruptcyproject.org/">EIDL hub</a> &middot;
+<a href="https://eidl-screener.openbankruptcyproject.org/">EIDL screener</a> &middot;
+<a href="https://studentloans.openbankruptcyproject.org/">Student loan discharge</a> &middot;
+<a href="https://523a8.openbankruptcyproject.org/">§ 523(a)(8) research</a> &middot;
+<a href="https://openbankruptcyproject.org/">OBP home</a>
+</div>
 <footer>
 <p>This page provides general information for educational purposes only. It does not constitute
-legal advice and does not create an attorney-client relationship.</p>
+legal advice and does not create an attorney-client relationship. EIDL discharge analysis
+turns on the specific facts of your loan, business entity, and bankruptcy chapter; consult a
+licensed bankruptcy attorney before filing.</p>
 <p><strong>Open Bankruptcy Project</strong> &mdash; a 501(c)(3) public charity (EIN 41-5159631).
 <a href="https://openbankruptcyproject.org/">openbankruptcyproject.org</a></p>
 </footer>
